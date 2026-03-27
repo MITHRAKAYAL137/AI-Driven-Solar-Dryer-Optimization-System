@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 # Page Config
 st.set_page_config(page_title="Solar Dryer AI", layout="wide")
-st.title("🌞 AI Driven Solar Dryer Optimization System")
+st.title(" AI Driven Solar Dryer Optimization System")
 
 # Load Models
 @st.cache_resource
@@ -109,13 +109,13 @@ def colored_bar(value):
     """, unsafe_allow_html=True)
 
 st.markdown(f"**Final Moisture (%)**: {final_moisture:.2f}")
-colored_bar(moisture_bar)
+colored_bar(np.clip(final_moisture, 0, 100))
 
 st.markdown(f"**Drying Time (hrs)**: {drying_time:.2f}")
-colored_bar(drying_bar)
+colored_bar(np.clip((drying_time / 48) * 100, 0, 100))
 
 st.markdown(f"**Airflow (m/s)**: {pred_airflow:.2f}")
-colored_bar(airflow_bar)
+colored_bar(np.clip(((pred_airflow - vmin) / (vmax - vmin)) * 100, 0, 100))
 
 st.markdown(f"**Model Used:** {selected_model_name}")
 
